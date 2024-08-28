@@ -1,9 +1,8 @@
 <div class="task-list">
     <header class="task-list-header">
         <h2 class="task-list-title">bla-bla-bla</h2>
-        <button class="add-button">Add task</button>
+        <button class="add-button" (click)="openModal()">Add task</button>
     </header>
-    
     <main class="tasks">
         @for (task of tasks; track $index) {
             <app-task-item
@@ -14,4 +13,11 @@
             </app-task-item>
         }
     </main>
+    @if (selectedTask) {
+        <app-task-modal
+            [task]="selectedTask"
+            (close)="closeModal()"
+            (save)="saveTask()">
+        </app-task-modal>
+    }
 </div>

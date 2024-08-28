@@ -1,1 +1,23 @@
-<p>task-modal works!</p>
+<div class="task-modal">
+    <header class="modal-title">
+        <h3>Task</h3>
+    </header>
+    <main class="mam-modal">
+        <input 
+            class="title-input"
+            type="'text"
+            [(ngModel)]="task.title"
+            placeholder="Task Title"
+        />
+        <input 
+            class="description-input"
+            type="'text"
+            [(ngModel)]="task.description"
+            placeholder="Task Description"
+        />
+    </main>
+    <section class="modal-action">
+        <button (click)="saveTask()">Save</button>
+        <button (click)="closeModal()">Close</button>
+    </section>
+</div>

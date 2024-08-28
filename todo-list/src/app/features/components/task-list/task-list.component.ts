@@ -17,28 +17,7 @@ export class TaskListComponent {
   selectedTask: Task | null = null;
 
   constructor (private taskService : TaskService){
-    //this.tasks = taskService.getTasks();
-    this.tasks = [{
-      id:0,
-      title: 'one',
-      description:' two',
-      isCompleted:true,
-      createdAt: new Date,
-    },
-    {
-      id:1,
-      title: 'one',
-      description:' two',
-      isCompleted:true,
-      createdAt: new Date,
-    },
-    {
-      id:2,
-      title: 'one',
-      description:' two',
-      isCompleted:true,
-      createdAt: new Date,
-    }]
+    this.tasks = taskService.getTasks();
   }
 
   toggleDecr(task:Task){
@@ -64,7 +43,7 @@ export class TaskListComponent {
   }
 
   openModal(task?:Task){
-    this.selectedTask=task? {...task} : { id: NaN, title: '', description: '', createdAt: new Date(), isCompleted:false };
+    this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', createdAt: new Date(), isCompleted:false, isShow:false };
   }
 
   closeModal(){
