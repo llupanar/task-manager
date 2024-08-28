@@ -1,1 +1,15 @@
-<p>task-item works!</p>
+<div class="task-item">
+    <section class="task-item-header" (click)="toggleDescr()">
+        <span class="'task-title">{{task.title}}</span>
+        <span class="'task-date">{{task.createdAt | date: 'dd/mm/yy'}}</span>
+    </section>
+
+    @if (task.isShow) {
+        <div class="'task-description">{{task.description}}</div>
+    }
+
+    <section class="task-action">
+        <button class="edit-button" (click)="editTask()">EDIT</button>
+        <button class="delete-button" (click)="deleteTask()">DELETE</button>
+    </section>
+</div>

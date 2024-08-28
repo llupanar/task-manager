@@ -1,1 +1,17 @@
-<p>task-list works!</p>
+<div class="task-list">
+    <header class="task-list-header">
+        <h2 class="task-list-title">bla-bla-bla</h2>
+        <button class="add-button">Add task</button>
+    </header>
+    
+    <main class="tasks">
+        @for (task of tasks; track $index) {
+            <app-task-item
+                [task]="task"
+                (edit)="openModal(task)"
+                (delete)="deleteTask(task.id)"
+                (toggle)="toggleDecr(task)">
+            </app-task-item>
+        }
+    </main>
+</div>

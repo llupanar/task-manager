@@ -4,4 +4,5 @@ export interface Task {
     description: string;
     createdAt: Date;
     isCompleted: boolean;
+    isShow?: boolean;
 }
