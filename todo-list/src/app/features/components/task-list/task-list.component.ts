@@ -1,27 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { Task } from '../../../shared/model/task';
 import { TaskService } from '../../service/task.service';
+import { FilterPipe } from '../../../core/pipes/filter.pipe';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, TaskItemComponent, TaskModalComponent],
+  imports: [CommonModule, TaskItemComponent, TaskModalComponent, FilterPipe],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit{
   tasks: Task[] = [];
   selectedTask: Task | null = null;
+  filterMode:string='all'
 
   constructor (private taskService : TaskService){
-    this.tasks = taskService.getTasks();
   }
 
+  ngOnInit(): void {
+    this.tasks = this.taskService.getTasks();
+  }
+  setFilter(mode:string){
+    this.filterMode=mode;
+  }
   toggleDecr(task:Task){
     task.isShow=!task.isShow;
+  }
+
+  completeTask(task:Task){
+    task.isCompleted=!task.isCompleted;
+    this.taskService.saveTasks(this.tasks)
   }
 
   deleteTask(id: number){
@@ -43,7 +55,7 @@ export class TaskListComponent {
   }
 
   openModal(task?:Task){
-    this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', createdAt: new Date(), isCompleted:false, isShow:false };
+    this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', dueDate: new Date(), isCompleted:false, isShow:false };
   }
 
   closeModal(){

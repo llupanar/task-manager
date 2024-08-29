@@ -1,17 +1,24 @@
 <div class="task-list">
     <header class="task-list-header">
         <button class="add-button" (click)="openModal()">Add task</button>
+        <div class="'filter-button">
+            <button (click)="setFilter('all')">All</button>
+            <button (click)="setFilter('completed')">Completed</button>
+            <button (click)="setFilter('incomplete')">Incomplete</button>
+        </div>
     </header>
     <main class="tasks">
-        <section *ngFor="let task of tasks">
-            <app-task-item
-                [task]="task"
-                (edit)="openModal(task)"
-                (delete)="deleteTask(task.id)"
-                (toggle)="toggleDecr(task)"
-                (complete)="completeTask(task)">
-            </app-task-item>
-        </section>
+        <ul>
+            <li *ngFor="let task of tasks | filter: filterMode" [ngClass]="{'completed': task.isCompleted}" class="task-item">
+              <app-task-item 
+              [task]="task"
+              (edit)="openModal(task)"
+              (delete)="deleteTask(task.id)"
+              (toggle)="toggleDecr(task)"
+              (complete)="completeTask(task)">
+              </app-task-item>
+            </li>
+          </ul>
     </main>
     <section *ngIf="selectedTask">
         <app-task-modal

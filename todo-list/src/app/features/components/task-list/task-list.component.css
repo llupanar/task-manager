@@ -36,3 +36,7 @@ li{
     border-radius: 14px;
     background-color: #cac9c9;
 }
+
+.task_item.completed{
+    background-color: #202020;
+}

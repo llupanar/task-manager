@@ -2,7 +2,7 @@
     <div class = 'task-date'>{{task.dueDate | date: 'dd/MM/yy'}}</div>
     <div class="task-item-header">
         <span (click)="toggle.emit()">{{task.title}}</span>
-        <input type="checkbox" [(ngModel)]="task.isCompleted" (click)="complete.emit()"/>
+        <input class='task-status' type="checkbox" [(ngModel)]="task.isCompleted" (click)="complete.emit()"/>
     </div>
     <div *ngIf="task.isShow">{{task.description}}</div>
     <div class="task-action">
