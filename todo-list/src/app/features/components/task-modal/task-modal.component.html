@@ -1,23 +1,22 @@
-<div class="task-modal">
-    <header class="modal-title">
-        <h3>Task</h3>
-    </header>
-    <main class="mam-modal">
-        <input 
-            class="title-input"
-            type="'text"
-            [(ngModel)]="task.title"
-            placeholder="Task Title"
-        />
-        <input 
-            class="description-input"
-            type="'text"
-            [(ngModel)]="task.description"
-            placeholder="Task Description"
-        />
-    </main>
-    <section class="modal-action">
+<div class="modal">
+    <div class="modal-content">
+      <h2>Task</h2>
+      <input 
+        type="text" 
+        [(ngModel)]="task.title" 
+        placeholder="Task Title"
+      />
+      <textarea 
+        [(ngModel)]="task.description" 
+        placeholder="Task Description">
+      </textarea>
+      <input 
+        type="date" 
+        [(ngModel)]="task.dueDate"
+      />
+      <div class="modal-actions">
         <button (click)="saveTask()">Save</button>
         <button (click)="closeModal()">Close</button>
-    </section>
-</div>
+      </div>
+    </div>
+  </div>
