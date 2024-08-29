@@ -1,23 +1,23 @@
 <div class="task-list">
     <header class="task-list-header">
-        <h2 class="task-list-title">bla-bla-bla</h2>
         <button class="add-button" (click)="openModal()">Add task</button>
     </header>
     <main class="tasks">
-        @for (task of tasks; track $index) {
+        <section *ngFor="let task of tasks">
             <app-task-item
                 [task]="task"
                 (edit)="openModal(task)"
                 (delete)="deleteTask(task.id)"
-                (toggle)="toggleDecr(task)">
+                (toggle)="toggleDecr(task)"
+                (complete)="completeTask(task)">
             </app-task-item>
-        }
+        </section>
     </main>
-    @if (selectedTask) {
+    <section *ngIf="selectedTask">
         <app-task-modal
             [task]="selectedTask"
             (close)="closeModal()"
             (save)="saveTask()">
         </app-task-modal>
-    }
+    </section>
 </div>

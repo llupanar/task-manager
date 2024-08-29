@@ -1,15 +1,11 @@
 <section class="task-item">
-    <div class="task-item-header" (click)="toggle.emit()">
-        <span class="'task-title">{{task.title}}</span>
-        <span class="'task-date">{{task.dueDate | date: 'dd/mm/yy'}}</span>
-    </div>
-
-    @if (task.isShow) {
-        <div class="'task-description">{{task.description}}</div>
-    }
-
-    <div class="task-action">
+    <div class = 'task-date'>{{task.dueDate | date: 'dd/MM/yy'}}</div>
+    <div class="task-item-header">
+        <span (click)="toggle.emit()">{{task.title}}</span>
         <input type="checkbox" [(ngModel)]="task.isCompleted" (click)="complete.emit()"/>
+    </div>
+    <div *ngIf="task.isShow">{{task.description}}</div>
+    <div class="task-action">
         <button class="edit-button" (click)="edit.emit()">EDIT</button>
         <button class="delete-button" (click)="delete.emit()">DELETE</button>
     </div>
