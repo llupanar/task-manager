@@ -15,8 +15,8 @@
         [(ngModel)]="task.dueDate"
       />
       <div class="modal-actions">
-        <button (click)="saveTask()">Save</button>
-        <button (click)="closeModal()">Close</button>
+        <button (click)="save.emit(task)">Save</button>
+        <button (click)="close.emit()">Close</button>
       </div>
     </div>
   </div>

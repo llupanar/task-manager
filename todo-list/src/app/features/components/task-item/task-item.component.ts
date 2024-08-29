@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from '../../../shared/model/task';
 import { FormsModule } from '@angular/forms';
 
@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-item.component.html',
-  styleUrl: './task-item.component.css'
+  styleUrl: './task-item.component.css',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class TaskItemComponent {
   @Input() task!:Task;

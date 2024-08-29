@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Task } from '../../../shared/model/task';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,18 +8,11 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-modal.component.html',
-  styleUrl: './task-modal.component.css'
+  styleUrl: './task-modal.component.css',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class TaskModalComponent {
   @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<void>();
-
-  closeModal() {
-    this.close.emit();
-  }
-
-  saveTask() {
-    this.save.emit();
-  }
+  @Output() save = new EventEmitter<Task>();
 }
