@@ -9,7 +9,6 @@
         required maxlength="15"
         [ngClass]="{'invalid-title':!task.title&&title.touched}"
       />
-      
       <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">            
         <div *ngIf="title.hasError('required')">Title is required.</div>
       </div>
@@ -17,14 +16,12 @@
         [(ngModel)]="task.description" 
         placeholder="Task Description">
       </textarea>
-
       <input 
         type="date" 
         [(ngModel)]="task.dueDate"
       />
-
       <div class="modal-actions">
-        <button (click)="save.emit(task)">Save</button>
+        <button (click)="saveTask()">Save</button>
         <button (click)="close.emit()">Close</button>
       </div>
     </div>

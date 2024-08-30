@@ -15,4 +15,10 @@ export class TaskModalComponent {
   @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
+
+  saveTask(){
+    if(this.task.title){
+      this.save.emit(this.task)
+    }
+  }
 }
