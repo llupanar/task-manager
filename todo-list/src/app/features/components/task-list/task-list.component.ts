@@ -19,7 +19,7 @@ export class TaskListComponent implements OnInit{
   selectedTask: Task | null = null;
   filterMode:string='all'
 
-  constructor (private taskService : TaskService, private cdr: ChangeDetectorRef) {}
+  constructor (private taskService : TaskService) {}
 
   ngOnInit(): void {
     this.tasks = this.taskService.getTasks();
@@ -27,24 +27,20 @@ export class TaskListComponent implements OnInit{
 
   setFilter(mode:string){
     this.filterMode=mode;
-    this.cdr.markForCheck(); 
   }
 
   toggleDecr(task:Task){
     task.isShow=!task.isShow;
-    this.cdr.markForCheck();
   }
 
   completeTask(task:Task){
     task.isCompleted=!task.isCompleted;
     this.taskService.saveTasks(this.tasks)
-    this.cdr.markForCheck(); 
   }
   
   deleteTask(id: number){
     this.tasks=this.tasks.filter(task=>task.id!==id)
     this.taskService.saveTasks(this.tasks)
-    this.cdr.markForCheck();
   }
 
   saveTask(task: Task){
@@ -56,16 +52,13 @@ export class TaskListComponent implements OnInit{
     }
     this.taskService.saveTasks(this.tasks);
     this.closeModal();
-    this.cdr.markForCheck();
   }
 
   openModal(task?:Task){
     this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', dueDate: new Date(), isCompleted:false, isShow:false };
-    this.cdr.markForCheck(); 
   }
 
   closeModal(){
     this.selectedTask=null;
-    this.cdr.markForCheck();
   }
 }
