@@ -6,7 +6,7 @@
       <div *ngIf="checkTitle()" class='alert'>
         <div *ngIf="_title?.hasError('required')">Title is required.</div>
       </div>
-      <input type="textarea" placeholder="description" formControlName="description"/>
+      <textarea placeholder="description" formControlName="description"></textarea>
       <input type="date" placeholder="date" formControlName="dueDate"/>
     </form>
     <div class="modal-actions">
