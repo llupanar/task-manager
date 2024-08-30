@@ -1,31 +1,17 @@
 <div class="modal">
-    <div class="modal-content">
-      <h2>Task</h2>
-      <input 
-        type="text" 
-        [(ngModel)]="task.title" 
-        #title="ngModel"
-        placeholder="Task Title"
-        required maxlength="15"
-        [ngClass]="{'invalid-title':!task.title&&title.touched}"
-      />
-      
-      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">            
-        <div *ngIf="title.hasError('required')">Title is required.</div>
+  <div class="modal-content">
+    <h2>Task</h2>
+    <form [formGroup]="taskForm">
+      <input type="text" placeholder="title" formControlName="title" required maxlength="15" [ngClass]="{'invalid-title':checkTitle()}"/>
+      <div *ngIf="checkTitle()" class='alert'>
+        <div *ngIf="_title?.hasError('required')">Title is required.</div>
       </div>
-      <textarea 
-        [(ngModel)]="task.description" 
-        placeholder="Task Description">
-      </textarea>
-
-      <input 
-        type="date" 
-        [(ngModel)]="task.dueDate"
-      />
-
-      <div class="modal-actions">
-        <button (click)="save.emit(task)">Save</button>
-        <button (click)="close.emit()">Close</button>
-      </div>
+      <input type="textarea" placeholder="description" formControlName="description"/>
+      <input type="date" placeholder="date" formControlName="dueDate"/>
+    </form>
+    <div class="modal-actions">
+      <button (click)="saveTask()">Save</button>
+      <button (click)="close.emit()">Close</button>
     </div>
   </div>
+</div>
