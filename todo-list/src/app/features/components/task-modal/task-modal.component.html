@@ -1,21 +1,18 @@
 <div class="modal">
     <div class="modal-content">
       <h2>Task</h2>
-      <div class="'title-input">
       <input 
         type="text" 
         [(ngModel)]="task.title" 
         #title="ngModel"
         placeholder="Task Title"
         required maxlength="15"
-        required minlength="2"
+        [ngClass]="{'invalid-title':!task.title&&title.touched}"
       />
       
-      <div *ngIf="title.invalid && (title.dirty || title.touched)" [ngClass]="{'invalid-title': title.touched && title.invalid}" class="alert">            
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">            
         <div *ngIf="title.hasError('required')">Title is required.</div>
-        <div *ngIf="title.hasError('minlength')">Min 2 symbols.</div>
       </div>
-    </div>
       <textarea 
         [(ngModel)]="task.description" 
         placeholder="Task Description">
