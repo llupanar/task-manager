@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Task } from '../../../shared/model/task';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,11 +16,29 @@ export class TaskModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
 
+  pattReg: RegExp = /^(\S+\s+){0,3}\S+?$/
+
+  dateValidator = () => {
+    return (
+        control: AbstractControl
+    ) : {[key: string] : boolean} | null =>{
+      if(control.value){
+      let currDate= new Date()
+      let valid = new Date(control.value) > currDate 
+      return valid? null : {date : true}
+      }
+      return null;
+    }
+  }
+
   taskForm:FormGroup = new FormGroup({
       'id' : new FormControl(),
-      'title' : new FormControl('',Validators.required),
-      'description' : new FormControl(),
-      'dueDate': new FormControl()
+      'title' : new FormControl('',[
+                                      Validators.required,
+                                      Validators.pattern(this.pattReg)
+                                    ]),
+      'description' : new FormControl('',[Validators.maxLength(256)]),
+      'dueDate': new FormControl('',[this.dateValidator()])
   })
 
   ngOnInit(){
@@ -39,6 +57,17 @@ export class TaskModalComponent {
   checkTitle(){
     return this._title?.invalid && (this._title.touched || this._title.dirty)
   }
+
+  checkDescription(){
+    const control = this.taskForm.controls['description']
+    return control.invalid && (control.touched || control.dirty)
+  }
+
+  checkDate(){
+    const control = this.taskForm.controls['dueDate']
+    return control.invalid && (control.touched || control.dirty)
+  }
+
   saveTask(){
     if(!this.taskForm.invalid){ this.save.emit(this.taskForm.value) }
   }

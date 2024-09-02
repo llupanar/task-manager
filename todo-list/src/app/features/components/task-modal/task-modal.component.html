@@ -2,12 +2,24 @@
   <div class="modal-content">
     <h2>Task</h2>
     <form [formGroup]="taskForm">
-      <input type="text" placeholder="title" formControlName="title" required maxlength="15" [ngClass]="{'invalid-title':checkTitle()}"/>
+      <input  type="text" 
+              placeholder="title" 
+              formControlName="title" 
+              [ngClass]="{'invalid-title':checkTitle()}"/>
       <div *ngIf="checkTitle()" class='alert'>
         <div *ngIf="_title?.hasError('required')">Title is required.</div>
+      <div *ngIf="_title?.hasError('pattern')">No more the 4 words</div>
       </div>
-      <textarea placeholder="description" formControlName="description"></textarea>
+
+      <textarea placeholder="description" 
+                formControlName="description"
+                [ngClass]="{'invalid-description':checkDescription()}"></textarea>
+      <div *ngIf="checkDescription()" class='alert'> No more then 256 symbols</div>
+      
       <input type="date" placeholder="date" formControlName="dueDate"/>
+      <div *ngIf="checkDate()" class='alert'>
+        Back to the future
+      </div>
     </form>
     <div class="modal-actions">
       <button (click)="saveTask()">Save</button>

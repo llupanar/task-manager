@@ -56,7 +56,7 @@ export class TaskListComponent implements OnInit{
   }
 
   openModal(task?:Task){
-    this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', dueDate: new Date(), isCompleted:false, isShow:false };
+    this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', isCompleted:false, isShow:false };
   }
 
   closeModal(){
