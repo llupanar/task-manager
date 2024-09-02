@@ -16,56 +16,74 @@ export class TaskModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
 
-  pattReg: RegExp = /^(\S+\s+){0,3}\S+?$/
+  pattReg: RegExp = /^(?:\S+\s*){1,4}$/;
 
-  dateValidator = () => {
-    return (
-        control: AbstractControl
-    ) : {[key: string] : boolean} | null =>{
+  dateValidator() {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
       if(control.value){
-      let currDate= new Date()
-      let valid = new Date(control.value) > currDate 
-      return valid? null : {date : true}
+        const currDate= new Date().setHours(0, 0, 0, 0);
+        const selectedDate = new Date(control.value).setHours(0, 0, 0, 0);
+        return selectedDate >= currDate? null : {date : true};
       }
       return null;
     }
   }
 
   taskForm:FormGroup = new FormGroup({
-      'id' : new FormControl(),
-      'title' : new FormControl('',[
-                                      Validators.required,
-                                      Validators.pattern(this.pattReg)
-                                    ]),
-      'description' : new FormControl('',[Validators.maxLength(256)]),
-      'dueDate': new FormControl('',[this.dateValidator()])
+    'id' : new FormControl(),
+    'title' : new FormControl('',[
+      Validators.required,
+      Validators.pattern(this.pattReg)
+    ]),
+    'description' : new FormControl({value: '', disabled: true}, [Validators.maxLength(256)]),
+    'dueDate': new FormControl({value: '', disabled: true}, [this.dateValidator()])
   })
 
   ngOnInit(){
     this.taskForm.patchValue({
-      'id':this.task.id,
+      'id': this.task.id,
       'title': this.task.title,
       'description': this.task.description,
       'dueDate': this.task.dueDate
     })
+
+    this.manageFieldState();
+
+    this._title?.valueChanges.subscribe(() =>{
+      this.manageFieldState();
+    })
+  }
+
+  manageFieldState(){
+    if (this._title?.valid){
+      this._description?.enable();
+      this._dueDate?.enable();
+    } else{
+      this._description?.disable();
+      this._dueDate?.disable();
+    }
   }
 
   get _title(){
     return this.taskForm.get('title')
   }
+  get _description(){
+    return this.taskForm.get('description')
+  }
+  get _dueDate(){
+    return this.taskForm.get('dueDate')
+  }
 
   checkTitle(){
-    return this._title?.invalid && (this._title.touched || this._title.dirty)
+    return this._title?.invalid && (this._title?.touched || this._title?.dirty)
   }
 
   checkDescription(){
-    const control = this.taskForm.controls['description']
-    return control.invalid && (control.touched || control.dirty)
+    return this._description?.invalid && (this._description?.touched || this._description?.dirty)
   }
 
   checkDate(){
-    const control = this.taskForm.controls['dueDate']
-    return control.invalid && (control.touched || control.dirty)
+    return this._dueDate?.invalid && (this._dueDate?.touched || this._dueDate?.dirty)
   }
 
   saveTask(){
