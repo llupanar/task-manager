@@ -10,10 +10,20 @@ span{
     font-weight: bold;
 }
 
-.task-date{
+.task-deadline{
     text-align: center;
     font-size: 14px;
     color: #434343;
+}
+
+.date-completed{
+    text-align: center;
+    font-size: 14px;
+    color: #434343;
+}
+
+.task-deadline.done{
+    text-decoration: line-through;
 }
 
 .edit-button, .delete-button {
@@ -36,8 +46,10 @@ span{
 div.task-descr {
     max-height: 0;
     padding-left: 10px;
+    padding-right: 10px;
     transition: max-height .5s ease-out;
     overflow: hidden;
+    word-break: break-all;
 }
 
 

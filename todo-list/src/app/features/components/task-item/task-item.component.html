@@ -1,5 +1,6 @@
 <section class="task-item">
-    <div class = 'task-date'>{{task.dueDate | date: 'dd/MM/yy'}}</div>
+    <div class = 'task-deadline' [ngClass]="{'done': task.isCompleted}">{{task.dueDate | date: 'dd/MM/yy'}}</div>
+    <div class="date-completed" *ngIf="task.isCompleted">{{task.completeDate | date: 'dd/MM/yy'}}</div>
     <div class="task-item-header">
         <span (click)="toggle.emit()">{{task.title}}</span>
         <input class='task-status' type="checkbox" [(ngModel)]="task.isCompleted" (click)="complete.emit()"/>

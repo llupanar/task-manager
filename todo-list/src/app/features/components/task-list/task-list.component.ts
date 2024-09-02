@@ -35,6 +35,7 @@ export class TaskListComponent implements OnInit{
 
   completeTask(task:Task){
     task.isCompleted=!task.isCompleted;
+    if(task.isCompleted) task.completeDate = new Date();
     this.taskService.saveTasks(this.tasks)
   }
   
