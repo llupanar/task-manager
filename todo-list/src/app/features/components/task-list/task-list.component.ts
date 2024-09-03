@@ -14,14 +14,12 @@ import { FilterPipe } from '../../../core/pipes/filter.pipe';
   styleUrl: './task-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnInit{
+export class TaskListComponent{
   tasks: Task[] = [];
   selectedTask: Task | null = null;
   filterMode:string='all'
 
-  constructor (private taskService : TaskService) {}
-
-  ngOnInit(): void {
+  constructor (private taskService : TaskService) {
     this.tasks = this.taskService.getTasks();
   }
 
@@ -36,22 +34,15 @@ export class TaskListComponent implements OnInit{
   completeTask(task:Task){
     task.isCompleted=!task.isCompleted;
     if(task.isCompleted) task.completeDate = new Date();
-    this.taskService.saveTasks(this.tasks)
+    this.tasks=this.taskService.saveTask(task)
   }
   
   deleteTask(id: number){
-    this.tasks=this.tasks.filter(task=>task.id!==id)
-    this.taskService.saveTasks(this.tasks)
+    this.tasks = this.taskService.deleteTask(id)
   }
 
   saveTask(task: Task){
-    const index = this.tasks.findIndex(t => t.id === task.id);
-    if (index === -1) {
-      this.tasks = [...this.tasks, task]; 
-    } else {
-      this.tasks = this.tasks.map(t => t.id === task.id ? task : t); 
-    }
-    this.taskService.saveTasks(this.tasks);
+    this.tasks=this.taskService.saveTask(task);
     this.closeModal();
   }
 

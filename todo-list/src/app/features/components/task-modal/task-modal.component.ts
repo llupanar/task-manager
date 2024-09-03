@@ -36,7 +36,7 @@ export class TaskModalComponent {
       Validators.pattern(this.pattReg)
     ]),
     'description' : new FormControl({value: '', disabled: true}, [Validators.maxLength(256)]),
-    'dueDate': new FormControl({value: '', disabled: true}, [this.dateValidator()])
+    'dueDate': new FormControl({value: '', disabled: true}, [Validators.required, this.dateValidator()])
   })
 
   ngOnInit(){

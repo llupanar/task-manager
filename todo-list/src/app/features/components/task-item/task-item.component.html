@@ -5,7 +5,7 @@
         <span (click)="toggle.emit()">{{task.title}}</span>
         <input class='task-status' type="checkbox" [(ngModel)]="task.isCompleted" (click)="complete.emit()"/>
     </div>
-    <div class='task-descr' [ngClass]="{'open': !task.isShow}">{{task.description}}</div>
+    <div class='task-descr' [ngClass]="{'open': task.isShow}">{{task.description}}</div>
     <div class="task-action">
         <button class="edit-button" (click)="edit.emit()">EDIT</button>
         <button class="delete-button" (click)="delete.emit()">DELETE</button>
