@@ -15,42 +15,42 @@ import { FilterPipe } from '../../../core/pipes/filter.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListComponent{
-  tasks: Task[] = [];
-  selectedTask: Task | null = null;
-  filterMode:string='all'
+  public tasks: Task[] = [];
+  public selectedTask: Task | null = null;
+  public filterMode:string='all'
 
   constructor (private taskService : TaskService) {
     this.tasks = this.taskService.getTasks();
   }
 
-  setFilter(mode:string){
+  public setFilter(mode:string): void{
     this.filterMode=mode;
   }
 
-  toggleDecr(task:Task){
+  public toggleDecr(task:Task): void{
     task.isShow=!task.isShow;
   }
 
-  completeTask(task:Task){
+  public completeTask(task:Task): void{
     task.isCompleted=!task.isCompleted;
     if(task.isCompleted) task.completeDate = new Date();
     this.tasks=this.taskService.saveTask(task)
   }
   
-  deleteTask(id: number){
+  public deleteTask(id: number): void{
     this.tasks = this.taskService.deleteTask(id)
   }
 
-  saveTask(task: Task){
+  public saveTask(task: Task): void{
     this.tasks=this.taskService.saveTask(task);
     this.closeModal();
   }
 
-  openModal(task?:Task){
+  public openModal(task?:Task): void{
     this.selectedTask=task? {...task} : { id: Date.now(), title: '', description: '', isCompleted:false, isShow:false };
   }
 
-  closeModal(){
+  public closeModal(): void{
     this.selectedTask=null;
   }
 }

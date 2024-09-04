@@ -16,9 +16,9 @@ export class TaskModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
 
-  pattReg: RegExp = /^(?:\S+\s*){1,4}$/;
+  private pattReg: RegExp = /^(?:\S+\s*){1,4}$/;
 
-  dateValidator() {
+  private dateValidator() {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if(control.value){
         const currDate= new Date().setHours(0, 0, 0, 0);
@@ -29,7 +29,7 @@ export class TaskModalComponent {
     }
   }
 
-  taskForm:FormGroup = new FormGroup({
+  public taskForm:FormGroup = new FormGroup({
     'id' : new FormControl(),
     'title' : new FormControl('',[
       Validators.required,
@@ -39,7 +39,7 @@ export class TaskModalComponent {
     'dueDate': new FormControl({value: '', disabled: true}, [Validators.required, this.dateValidator()])
   })
 
-  ngOnInit(){
+  public ngOnInit(): void{
     this.taskForm.patchValue({
       'id': this.task.id,
       'title': this.task.title,
@@ -54,7 +54,7 @@ export class TaskModalComponent {
     })
   }
 
-  manageFieldState(){
+  private manageFieldState(): void{
     if (this._title?.valid){
       this._description?.enable();
       this._dueDate?.enable();
@@ -64,29 +64,29 @@ export class TaskModalComponent {
     }
   }
 
-  get _title(){
+  public get _title(): AbstractControl<any, any> | null{
     return this.taskForm.get('title')
   }
-  get _description(){
+  public get _description(): AbstractControl<any, any> | null{
     return this.taskForm.get('description')
   }
-  get _dueDate(){
+  public get _dueDate(): AbstractControl<any, any> | null{
     return this.taskForm.get('dueDate')
   }
 
-  checkTitle(){
+  public checkTitle(): boolean | undefined{
     return this._title?.invalid && (this._title?.touched || this._title?.dirty)
   }
 
-  checkDescription(){
+  public checkDescription(): boolean | undefined{
     return this._description?.invalid && (this._description?.touched || this._description?.dirty)
   }
 
-  checkDate(){
+  public checkDate(): boolean | undefined{
     return this._dueDate?.invalid && (this._dueDate?.touched || this._dueDate?.dirty)
   }
 
-  saveTask(){
+  public saveTask(): void{
     if(!this.taskForm.invalid){ this.save.emit(this.taskForm.value) }
   }
 }

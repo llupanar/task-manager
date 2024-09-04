@@ -13,18 +13,18 @@ export class TaskService {
   private tasksKey = 'tasks'
   private tasks: Task[] = []
 
-  getTasks() : Task[]{
+  public getTasks() : Task[]{
     const tasks = localStorage.getItem(this.tasksKey);
     return tasks? JSON.parse(tasks) : []; 
   }
 
-  deleteTask(id: number): Task[]{
+  public deleteTask(id: number): Task[]{
     this.tasks = this.tasks.filter(task=>task.id!==id)
     this.saveTasks(this.tasks)
     return this.tasks
   }
 
-  saveTask(task: Task): Task[]{
+  public saveTask(task: Task): Task[]{
     const index = this.tasks.findIndex(t => t.id === task.id);
     if (index === -1) {
       this.tasks = [...this.tasks, task]; 
@@ -35,7 +35,7 @@ export class TaskService {
     return this.tasks
   }
 
-  saveTasks(tasks: Task[]): void{
+  private saveTasks(tasks: Task[]): void{
     localStorage.setItem(this.tasksKey, JSON.stringify(tasks));
   }
 }
