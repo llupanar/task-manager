@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { Task } from '../../../shared/model/task';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TaskForm } from '../../model/task-form';
 
 @Component({
   selector: 'app-task-modal',
@@ -18,7 +19,7 @@ export class TaskModalComponent {
 
   private pattReg: RegExp = /^(?:\S+\s*){1,4}$/;
 
-  private dateValidator() {
+  private dateValidator(){
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if(control.value){
         const currDate= new Date().setHours(0, 0, 0, 0);
@@ -29,15 +30,15 @@ export class TaskModalComponent {
     }
   }
 
-  public taskForm:FormGroup = new FormGroup({
-    'id' : new FormControl(),
-    'title' : new FormControl('',[
+  public taskForm: FormGroup = new FormGroup({
+    id: new FormControl<number | null>(null),
+    title: new FormControl<string>('', [
       Validators.required,
       Validators.pattern(this.pattReg)
     ]),
-    'description' : new FormControl({value: '', disabled: true}, [Validators.maxLength(256)]),
-    'dueDate': new FormControl({value: '', disabled: true}, [Validators.required, this.dateValidator()])
-  })
+    description: new FormControl<string>({ value: '', disabled: true }, [Validators.maxLength(256)]),
+    dueDate: new FormControl<string | null>({ value: null, disabled: true }, [this.dateValidator()])
+  } as TaskForm);
 
   public ngOnInit(): void{
     this.taskForm.patchValue({
