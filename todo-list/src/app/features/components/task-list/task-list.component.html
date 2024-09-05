@@ -9,7 +9,7 @@
     </header>
     <main class="tasks">
       <ul>
-        <li *ngFor="let task of tasks | filter: filterMode" [ngClass]="{'completed': task.isCompleted}" class="task-item">
+        <li *ngFor="let task of (tasks$ | async) ||[] | filter: filterMode" [ngClass]="{'completed': task.isCompleted}" class="task-item">
             <app-task-item 
                 [task]="task"
                 (edit)="openModal(task)"

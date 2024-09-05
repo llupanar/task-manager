@@ -8,13 +8,18 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-item.component.html',
-  styleUrl: './task-item.component.css',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  styleUrls: ['./task-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskItemComponent {
-  @Input() task!:Task;
+  @Input() task!: Task;
   @Output() edit = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
   @Output() toggle = new EventEmitter<void>();
-  @Output() complete = new EventEmitter<void>();
+  @Output() complete = new EventEmitter<Task>();
+
+  onCompleteTask(): void{
+    const updatedTask = { ...this.task, isCompleted: !this.task.isCompleted };
+    this.complete.emit(updatedTask);
+  }
 }
