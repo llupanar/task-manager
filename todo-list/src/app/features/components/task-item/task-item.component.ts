@@ -18,7 +18,7 @@ export class TaskItemComponent {
   @Output() toggle = new EventEmitter<void>();
   @Output() complete = new EventEmitter<Task>();
 
-  onCompleteTask(): void{
+  public onCompleteTask(): void{
     const updatedTask = { ...this.task, isCompleted: !this.task.isCompleted };
     this.complete.emit(updatedTask);
   }

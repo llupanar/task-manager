@@ -15,7 +15,7 @@ export class TaskService {
     return tasks? JSON.parse(tasks) : []; 
   }
 
-  saveTasks(tasks: Task[]): void {
+  public saveTasks(tasks: Task[]): void {
     localStorage.setItem(this.tasksKey, JSON.stringify(tasks));
   }
 }
